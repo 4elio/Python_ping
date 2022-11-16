@@ -23,13 +23,8 @@ def ping():
     try:
         socket.setdefaulttimeout(3)
 
-        # if data interruption occurs for 3
-        # seconds, <except> part will be executed
-
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # AF_INET: address family
-        # SOCK_STREAM: type for TCP
-
+        
         host = input("\n""Inserisci l'indirizzo da verificare: ")
         port = int(input("Inserisci la porta: "))
 
@@ -38,9 +33,7 @@ def ping():
 
     except OSError as error:
         return False
-    # function returns false value
-    # after data interruption
-
+   
     else:
         s.close()
         # closing the connection after the
@@ -52,8 +45,7 @@ def ping():
 ''' Viene calcolato utilizzando il tempo di inattività (stop) quando la connessione Internet
 ''' è stata persa e il tempo di attività (inizio) quando la connessione Internet è stata ripristinata
 def calculate_time(start, stop):
-    # calculating unavailability
-    # time and converting it in seconds
+    
     difference = stop - start
     seconds = float(str(difference.total_seconds()))
     return str(datetime.timedelta(seconds=seconds)).split(".")[0]
@@ -94,7 +86,7 @@ def first_check():
 
 
 def main():
-    # main function to call functions
+    
     monitor_start_time = datetime.datetime.now()
     monitoring_date_time = "monitoring started at: " + \
                            str(monitor_start_time).split(".")[0]
@@ -109,14 +101,14 @@ def main():
         # if false
         while True:
 
-            # infinite loop to see if the connection is acquired
+            
             if not ping():
 
-                # if connection not acquired
+                
                 time.sleep(1)
             else:
 
-                # if connection is acquired
+                
 
                 first_check()
                 print(monitoring_date_time)
@@ -124,23 +116,20 @@ def main():
 
     with open(FILE, "a") as file:
 
-        # write into the file as a into networkinfo.log,
-        # "a" - append: opens file for appending,
-        # creates the file if it does not exist???
+        
         file.write("\n")
         file.write(monitoring_date_time + "\n")
 
     while True:
 
-        # infinite loop, as we are monitoring
-        # the network connection till the machine runs
+        
         if ping():
 
-            # if true: the loop will execute after every 5 seconds
+            
             time.sleep(5)
 
         else:
-            # if false: fail message will be displayed
+            
             down_time = datetime.datetime.now()
             fail_msg = "disconnected at: " + str(down_time).split(".")[0]
             print(fail_msg)
@@ -155,7 +144,7 @@ def main():
 
             up_time = datetime.datetime.now()
 
-            # after loop breaks, connection restored
+            
             uptime_message = "connected again: " + str(up_time).split(".")[0]
 
             down_time = calculate_time(down_time, up_time)
@@ -164,10 +153,8 @@ def main():
             print(uptime_message)
             print(unavailablity_time)
 
-            with open(FILE, "a") as file:
-
-                # log entry for connection restoration time,
-                # and unavailability time
+            with open(FILE, "a") as file:           
+                
                 file.write(uptime_message + "\n")
                 file.write(unavailablity_time + "\n")
 
