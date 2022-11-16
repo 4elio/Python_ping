@@ -22,22 +22,24 @@ import time
 
 FILE = os.path.join(os.getcwd(), "ping_status.log")
 
-
-# Il sistema tenterà di eseguire il ping di un server specifico (PORT su un IP) Se la macchina non riesce a connettersi,
-# verrà eseguita l'istruzione EXCEPT In caso contrario, la connessione verrà chiusa dopo che il sistema
-# è stato connesso correttamente al server
+'''
+ Il sistema tenterà di eseguire il ping di un server specifico (PORT su un IP) Se la macchina non riesce a connettersi,
+ verrà eseguita l'istruzione EXCEPT In caso contrario, la connessione verrà chiusa dopo che il sistema
+ è stato connesso correttamente al server
+'''
 def ping():
 
     try:
         socket.setdefaulttimeout(3)
-
+'''
         # if data interruption occurs for 3
         # seconds, <except> part will be executed
-
+'''
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+ '''
         # AF_INET: address family
         # SOCK_STREAM: type for TCP
-
+'''
         host = input ("\n""Inserisci l'indirizzo da verificare")
         port = int(input("\n""Inserisci la porta" ))
 
@@ -46,13 +48,16 @@ def ping():
 
     except OSError as error:
         return False
+'''   
     # function returns false value
     # after data interruption
-
+'''
     else:
         s.close()
+'''
         # closing the connection after the
         # communication with the server is completed
+   '''
         return True
 
 '''Il tempo di indisponibilità è la durata per la quale la connessione Internet non era disponibile.
@@ -73,7 +78,9 @@ def calculate_time(start, stop):
 
 def first_check():
     if ping():
+        '''
         # if ping returns true
+       '''
         live = "\nPING ARRIVATO A DESTINAZIONE\n"
         print(live)
         connection_acquired_time = datetime.datetime.now()
@@ -82,21 +89,25 @@ def first_check():
         print(acquiring_message)
 
         with open(FILE, "a") as file:
-
+            '''
             # writes into the log file
+'''
             file.write(live)
             file.write(acquiring_message)
 
         return True
 
     else:
+        '''
         # if ping returns false
+        '''
         not_live = "\nPING NON ARRIVA ALLA DESTINAZIONE\n"
         print(not_live)
 
         with open(FILE, "a") as file:
-
+'''
             # writes into the log file
+'''
             file.write(not_live)
         return False
 
@@ -143,7 +154,7 @@ def main():
 '''
         # infinite loop, as we are monitoring
         # the network connection till the machine runs
-   '''   
+   '''
         if ping():
 '''
             # if true: the loop will execute after every 5 seconds
