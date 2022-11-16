@@ -2,11 +2,6 @@
 # How to make a ping whit a python script
 
 
-import os
-import socket
-import datetime
-import time
-
 '''Per prima verrà eseguita first_check() (questa funzione verrà eseguita solo una volta ). 
    Se true(connessione acquisita): verrà avviato il monitoraggio Se false(PING NON ARRIVA ALLA DESTINAZIONE): 
    else verrà eseguita l'istruzione avendo infinito ciclo while per verificare la connessione internet utilizzando la funzione ping() Se ping restituisce false, 
