@@ -55,20 +55,22 @@ def ping():
         # communication with the server is completed
         return True
 
-# Il tempo di indisponibilità è la durata per la quale la connessione Internet non era disponibile.
-# Viene calcolato utilizzando il tempo di inattività (stop) quando la connessione Internet
-# è stata persa e il tempo di attività (inizio) quando la connessione Internet è stata ripristinata
+'''Il tempo di indisponibilità è la durata per la quale la connessione Internet non era disponibile.
+ Viene calcolato utilizzando il tempo di inattività (stop) quando la connessione Internet
+ è stata persa e il tempo di attività (inizio) quando la connessione Internet è stata ripristinata'''
+
 def calculate_time(start, stop):
-    # calculating unavailability
-    # time and converting it in seconds
+''' #calculating unavailability
+    # time and converting it in seconds'''
     difference = stop - start
     seconds = float(str(difference.total_seconds()))
     return str(datetime.timedelta(seconds=seconds)).split(".")[0]
 
-# Questa funzione verrà eseguita una sola volta, cioè all'inizio dello script per verificare se il sistema è già connesso a una connessione Internet o meno, e scriverlo nel file di registro.
-# La funzione ping() viene chiamata Se ping restituisce true (la macchina è connessa a Internet),
-# lo script stamperà "CONNECTION ACQUIRED" e scriverà lo stesso nel file di registro.
-# Se il ping restituisce false (il sistema non è connesso a Internet), lo script stamperà "CONNESSIONE NON ACQUISITA" e scriverà lo stesso nel file di registro.
+''' Questa funzione verrà eseguita una sola volta, cioè all'inizio dello script per verificare se il sistema è già connesso a una connessione Internet o meno, e scriverlo nel file di registro.
+ La funzione ping() viene chiamata Se ping restituisce true (la macchina è connessa a Internet),
+ lo script stamperà "CONNECTION ACQUIRED" e scriverà lo stesso nel file di registro.
+ Se il ping restituisce false (il sistema non è connesso a Internet), lo script stamperà "CONNESSIONE NON ACQUISITA" e scriverà lo stesso nel file di registro.'''
+
 def first_check():
     if ping():
         # if ping returns true
@@ -100,7 +102,7 @@ def first_check():
 
 
 def main():
-    # main function to call functions
+   ''' # main function to call functions'''
     monitor_start_time = datetime.datetime.now()
     monitoring_date_time = "monitoring started at: " + \
                            str(monitor_start_time).split(".")[0]
@@ -108,45 +110,49 @@ def main():
     if first_check():
         # if true
         print(monitoring_date_time)
-    # monitoring will only start when
+''' # monitoring will only start when
     # the connection will be acquired
-
+'''
     else:
-        # if false
+        '''# if false'''
         while True:
 
-            # infinite loop to see if the connection is acquired
+            '''# infinite loop to see if the connection is acquired'''
             if not ping():
 
-                # if connection not acquired
+                '''# if connection not acquired'''
                 time.sleep(1)
             else:
-
+'''
                 # if connection is acquired
-
+'''
                 first_check()
                 print(monitoring_date_time)
                 break
 
     with open(FILE, "a") as file:
-
+'''
         # write into the file as a into networkinfo.log,
         # "a" - append: opens file for appending,
         # creates the file if it does not exist???
+   '''
         file.write("\n")
         file.write(monitoring_date_time + "\n")
 
     while True:
-
+'''
         # infinite loop, as we are monitoring
         # the network connection till the machine runs
+   '''   
         if ping():
-
+'''
             # if true: the loop will execute after every 5 seconds
+   '''
             time.sleep(5)
 
         else:
-            # if false: fail message will be displayed
+       '''     # if false: fail message will be displayed
+          '''
             down_time = datetime.datetime.now()
             fail_msg = "disconnected at: " + str(down_time).split(".")[0]
             print(fail_msg)
@@ -156,14 +162,16 @@ def main():
                 file.write(fail_msg + "\n")
 
             while not ping():
+             '''
                 # infinite loop, will run till ping() return true
+                '''
                 time.sleep(1)
 
             up_time = datetime.datetime.now()
-
+'''
             # after loop breaks, connection restored
             uptime_message = "connected again: " + str(up_time).split(".")[0]
-
+'''
             down_time = calculate_time(down_time, up_time)
             unavailablity_time = "connection was unavailable for: " + down_time
 
@@ -171,11 +179,13 @@ def main():
             print(unavailablity_time)
 
             with open(FILE, "a") as file:
-
+'''
                 # log entry for connection restoration time,
                 # and unavailability time
+   '''
                 file.write(uptime_message + "\n")
                 file.write(unavailablity_time + "\n")
 
 
 main()
+
