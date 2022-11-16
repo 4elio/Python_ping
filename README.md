@@ -21,9 +21,9 @@ FILE = os.path.join(os.getcwd(), input("Inserisci il nome del file: "))
 FILE = FILE + (".log")
 
 
-# Il sistema tenterà di eseguire il ping di un server specifico (PORT su un IP) Se la macchina non riesce a connettersi,
-# verrà eseguita l'istruzione EXCEPT In caso contrario, la connessione verrà chiusa dopo che il sistema
-# è stato connesso correttamente al server
+''' Il sistema tenterà di eseguire il ping di un server specifico (PORT su un IP) Se la macchina non riesce a connettersi,
+verrà eseguita l'istruzione EXCEPT In caso contrario, la connessione verrà chiusa dopo che il sistema
+è stato connesso correttamente al server'''
 def ping():
     try:
         socket.setdefaulttimeout(3)
@@ -53,9 +53,9 @@ def ping():
         return True
 
 
-# Il tempo di indisponibilità è la durata per la quale la connessione Internet non era disponibile.
-# Viene calcolato utilizzando il tempo di inattività (stop) quando la connessione Internet
-# è stata persa e il tempo di attività (inizio) quando la connessione Internet è stata ripristinata
+''' Il tempo di indisponibilità è la durata per la quale la connessione Internet non era disponibile.
+''' Viene calcolato utilizzando il tempo di inattività (stop) quando la connessione Internet
+''' è stata persa e il tempo di attività (inizio) quando la connessione Internet è stata ripristinata
 def calculate_time(start, stop):
     # calculating unavailability
     # time and converting it in seconds
@@ -64,10 +64,10 @@ def calculate_time(start, stop):
     return str(datetime.timedelta(seconds=seconds)).split(".")[0]
 
 
-# Questa funzione verrà eseguita una sola volta, cioè all'inizio dello script per verificare se il sistema è già connesso a una connessione Internet o meno, e scriverlo nel file di registro.
-# La funzione ping() viene chiamata Se ping restituisce true (la macchina è connessa a Internet),
-# lo script stamperà "CONNECTION ACQUIRED" e scriverà lo stesso nel file di registro.
-# Se il ping restituisce false (il sistema non è connesso a Internet), lo script stamperà "CONNESSIONE NON ACQUISITA" e scriverà lo stesso nel file di registro.
+''' Questa funzione verrà eseguita una sola volta, cioè all'inizio dello script per verificare se il sistema è già connesso a una connessione Internet o meno, e scriverlo nel file di registro.
+''' La funzione ping() viene chiamata Se ping restituisce true (la macchina è connessa a Internet),
+''' lo script stamperà "CONNECTION ACQUIRED" e scriverà lo stesso nel file di registro.
+''' Se il ping restituisce false (il sistema non è connesso a Internet), lo script stamperà "CONNESSIONE NON ACQUISITA" e scriverà lo stesso nel file di registro.
 def first_check():
     if ping():
         # if ping returns true
